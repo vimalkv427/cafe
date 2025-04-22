@@ -88,8 +88,20 @@ class BillingController extends Controller
 
         // Debug to check order
         // dd($orderItems);
+        $activeTables = Order::where('status', 'pending')
+                         ->distinct('table_id')
+                         ->count('table_id');
+        
+        $takeaways = Takeaway::whereDate('created_at', now()->toDateString())->get();
 
-        return view('admin.billing.index1', compact('categories', 'products', 'order', 'orderItems'));
+        // Example: assuming there's a 'printed' boolean column
+        $pendingTakeawayCount = Takeaway::where('status', false)
+                                        ->whereDate('created_at', now()->toDateString())
+                                        ->count();                 
+
+   
+
+        return view('admin.billing.index1', compact('categories', 'products', 'order', 'orderItems','activeTables','takeaways','pendingTakeawayCount'));
     }
 
 

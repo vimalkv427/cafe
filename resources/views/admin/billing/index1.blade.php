@@ -1,6 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <style>
+@media print {
+    body {
+        font-family: "Courier New", monospace;
+        font-size: 11px;
+        color: #000;
+        margin: 0;
+        padding: 0;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    td, th {
+        padding: 2px 4px;
+        word-break: break-word;
+        white-space: normal;
+    }
+
+    .no-print {
+        display: none;
+    }
+
+    @page {
+        size: 80mm auto;
+        margin: 2mm;
+    }
+}
+</style>
+
+<style>
     @media print {
         @page {
             margin: 0;
@@ -158,6 +190,26 @@
                 <li class="nav-item pos-nav">
                     <a href="{{ route('admin.dashboard') }}" class="btn btn-purple btn-md d-inline-flex align-items-center">
                         <i class="ti ti-world me-1"></i>Dashboard
+                    </a>
+                </li>
+                <li class="nav-item pos-nav">
+                    <a href="{{ route('bills.order_list') }}" class="btn btn-purple btn-md d-inline-flex align-items-center position-relative">
+                        <i class="ti ti-world me-1"></i>Pending Order 
+                        @if($activeTables > 0)
+                            <span class="badge bg-danger text-white position-absolute top-0 start-100 translate-middle">
+                                {{ $activeTables }}
+                            </span>
+                        @endif
+                    </a>
+                </li>
+                <li class="nav-item pos-nav">
+                    <a href="{{ route('bills.take_away') }}" class="btn btn-purple btn-md d-inline-flex align-items-center position-relative">
+                        <i class="ti ti-world me-1"></i> Take Away
+                        @if($pendingTakeawayCount > 0)
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ $pendingTakeawayCount }}
+                            </span>
+                        @endif
                     </a>
                 </li>
 
